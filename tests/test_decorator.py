@@ -5,7 +5,7 @@ from ananta import lambda_config
 
 
 def test_it():
-    @lambda_config
+    @lambda_config(name='my_func')
     def lambda_func(event, context):
         return {}
 

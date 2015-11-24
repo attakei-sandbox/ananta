@@ -7,34 +7,35 @@ import functools
 __version__ = '0.0.1'
 
 
-def lambda_config(func):
-    """Basic AWS-Lambda function defination decorator
-    """
-
-    @functools.wraps(func)
-    def _decorator(event, context):
-        return func(event, context)
-
-    return _decorator
-
-
 class FunctionCollector(object):
     def __init__(self):
         self._functions = []
 
-    def lambda_config(self, func):
-        func_path = '{}.{}'.format(func.__module__, func.__name__)
-        self._functions.append(func_path)
+    def lambda_config(self, name):
+        function = {
+            'name': name,
+        }
 
-        @functools.wraps(func)
-        def _decorator(event, context):
-            return func(event, context)
+        def _lambda_reciever(func):
+            function['handler'] = '{}.{}'.format(func.__module__.replace('.', '/'), func.__name__)
 
-        return _decorator
+            @functools.wraps(func)
+            def _func(event, context):
+                return func(event, context)
+
+            return _func
+
+        self._functions.append(function)
+        return _lambda_reciever
 
     @property
     def functions(self):
         return self._functions
+
+collector_ = FunctionCollector()
+
+
+lambda_config = collector_.lambda_config
 
 
 def main(args=None):
