@@ -18,6 +18,25 @@ def lambda_config(func):
     return _decorator
 
 
+class FunctionCollector(object):
+    def __init__(self):
+        self._functions = []
+
+    def lambda_config(self, func):
+        func_path = '{}.{}'.format(func.__module__, func.__name__)
+        self._functions.append(func_path)
+
+        @functools.wraps(func)
+        def _decorator(event, context):
+            return func(event, context)
+
+        return _decorator
+
+    @property
+    def functions(self):
+        return self._functions
+
+
 def main(args=None):
     """Console script endpoint
 
