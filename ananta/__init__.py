@@ -1,7 +1,6 @@
 # -*- coding:utf8 -*-
 """Ananta : AWS Lambda packager
 """
-import sys
 import functools
 
 __version__ = '0.0.1'

@@ -1,6 +1,7 @@
 # -*- coding:utf8 -*-
 """Ananta : Console scripts
 """
+import sys
 
 
 def main(args=None):
