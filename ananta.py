@@ -11,10 +11,11 @@ class FunctionCollector(object):
     def __init__(self):
         self._functions = []
 
-    def lambda_config(self, name):
+    def lambda_config(self, name, **kwargs):
         function = {
-            'name': name,
+            'name': name
         }
+        function['role'] = kwargs.get('role')
 
         def _lambda_reciever(func):
             function['handler'] = '{}.{}'.format(func.__module__.replace('.', '/'), func.__name__)

@@ -4,15 +4,25 @@
 from ananta import FunctionCollector
 
 
-lambda_collection = FunctionCollector()
+def test_structures():
+    lambda_collection = FunctionCollector()
 
-
-def test_it():
     @lambda_collection.lambda_config(name='my_func')
     def lambda_func(event, context):
         return {}
 
     assert len(lambda_collection.functions) == 1
     assert type(lambda_collection.functions) == list
-    assert lambda_collection.functions[0]['name'] == 'my_func'
-    assert lambda_collection.functions[0]['handler'] == 'tests/test_collector.lambda_func'
+
+
+def test_required():
+    lambda_collection = FunctionCollector()
+
+    @lambda_collection.lambda_config(name='my_func', role='arn:aws:::::dummy')
+    def lambda_func(event, context):
+        return {}
+
+    decorated = lambda_collection.functions[0]
+    assert decorated['name'] == 'my_func'
+    assert decorated['handler'] == 'tests/test_collector.lambda_func'
+    assert decorated['role'] == 'arn:aws:::::dummy'
