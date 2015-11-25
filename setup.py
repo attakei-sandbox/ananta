@@ -81,7 +81,7 @@ setup(
     cmdclass={'test': PyTest},
     entry_points={
         "console_scripts": [
-            "ananta=ananta:main",
+            "ananta=ananta.scripts:main",
         ]
     }
 )
