@@ -12,14 +12,14 @@ def dump_functions(args):
     """
     import importlib
     import venusian
-    from tests.test_scanner import lambda_collection
+    from ananta import collector_
     args.path = os.path.abspath(args.path)
     module_path = args.path.replace(os.getcwd()+'/', '')
     module_name = module_path.replace('/', '.')
     module = importlib.import_module(module_name)
     scanner = venusian.Scanner()
     scanner.scan(module)
-    print(json.dumps(lambda_collection.functions))
+    print(json.dumps(collector_.functions))
 
 
 def directory_path(arg):

@@ -2,7 +2,6 @@
 """Test for ananta.scripts
 """
 from ananta.scripts import parser
-import unittest
 from pytest import raises
 
 
@@ -20,7 +19,7 @@ def test_script_func():
 #     assert type(json.loads(out)) is list
 
 
-class TestForDumpParser(unittest.TestCase):
+class TestForDumpParser(object):
     def _call_fut(self):
         from ananta.scripts import parser_dump
         return parser_dump
@@ -37,17 +36,26 @@ class TestForDumpParser(unittest.TestCase):
         assert parsed.path[0] == '/'
 
 
-# class TestForDumpFunction(unittest.TestCase):
-#     def _call_fut(self):
-#         from ananta.scripts import dump_functions
-#         return dump_functions
-#
-#     def _parse_args(self, argv=None):
-#         from ananta.scripts import parser
-#         if argv is None:
-#             argv = []
-#         return parser.parse_args(['dump'] + argv)
-#
-#     def test_path_default(self):
-#         args = self._parse_args()
-#         assert args.path != ''
+class TestForDumpFunction(object):
+    def setup_method(self, method):
+        import ananta
+        ananta.collector_ = ananta.FunctionCollector()
+        ananta.lambda_config = ananta.collector_.lambda_config
+
+    def _call_fut(self):
+        from ananta.scripts import dump_functions
+        return dump_functions
+
+    def _parse_args(self, *args):
+        from ananta.scripts import parser
+        return parser.parse_args(['dump'] + list(args))
+
+    def test_path_default(self, capsys):
+        import json
+        args = self._parse_args('-p', 'tests/sampleapp')
+        self._call_fut()(args)
+        out, err = capsys.readouterr()
+        out_data = json.loads(out)
+        assert out.startswith('[')
+        assert type(out_data) is list
+        assert len(out_data) == 1
