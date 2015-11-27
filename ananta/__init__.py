@@ -40,7 +40,7 @@ class FunctionCollector(object):
     def functions(self):
         return self._functions
 
-collector_ = FunctionCollector()
+_collector = FunctionCollector()
 
 
-lambda_config = collector_.lambda_config
+lambda_config = _collector.lambda_config
