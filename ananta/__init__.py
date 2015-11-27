@@ -7,10 +7,18 @@ __version__ = '0.0.1'
 
 
 class FunctionCollector(object):
+    """Lambda functions collector
+    """
     def __init__(self):
         self._functions = []
 
     def lambda_config(self, name, **kwargs):
+        """lambda function decorator
+
+        :param name: lambda function name
+        :type name: srt or unicode
+        :rtype: function
+        """
         function = {
             'name': name
         }

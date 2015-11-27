@@ -19,10 +19,18 @@ def dump_functions(args):
     module = importlib.import_module(module_name)
     scanner = venusian.Scanner()
     scanner.scan(module)
-    print(json.dumps(collector_.functions))
+    sys.stdout.write(json.dumps(collector_.functions))
 
 
 def directory_path(arg):
+    """ArgumentParser type. It check if arg is exists directory path.
+
+    :param arg: console argument
+    :type arg: srt or unicode
+    :returns: absolute path
+    :rtype: str or unicode
+    :raises: argparse.ArgumentTypeError
+    """
     abs_arg = os.path.abspath(arg)
     if not os.path.exists(abs_arg):
         msg = "%r is not exists" % arg
