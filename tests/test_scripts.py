@@ -4,7 +4,7 @@
 import os
 import sys
 from pytest import raises
-from . import working_directory, test_dir
+from . import working_directory, test_dir, samples_dir
 
 
 def test_script_func():
@@ -38,6 +38,10 @@ class TestForDumpParser(object):
         parsed = self._call_fut().parse_args(['-p', 'tests'])
         assert parsed.path[0] == '/'
 
+    def test_config_is_not_found(self, capsys):
+        with working_directory(samples_dir):
+            raises(SystemExit, self._call_fut().parse_args, ['-p', 'with_config', '-c', 'not_found'])
+
 
 class TestForDumpFunction(object):
     def setup_method(self, method):
@@ -58,7 +62,7 @@ class TestForDumpFunction(object):
         from ananta.scripts import parser
         return parser.parse_args(['dump'] + list(args))
 
-    def test_path_default(self, capsys):
+    def test_it(self, capsys):
         import json
         with working_directory(os.path.join(test_dir, 'samples')):
             args = self._parse_args('-p', 'singlefunction')

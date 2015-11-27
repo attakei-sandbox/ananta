@@ -41,11 +41,31 @@ def directory_path(arg):
     return abs_arg
 
 
+def file_path(arg):
+    """ArgumentParser type. It check if arg is exists directory path.
+
+    :param arg: console argument
+    :type arg: srt or unicode
+    :returns: absolute path
+    :rtype: str or unicode
+    :raises: argparse.ArgumentTypeError
+    """
+    abs_arg = os.path.abspath(arg)
+    if not os.path.exists(abs_arg):
+        msg = "%r is not exists" % arg
+        raise argparse.ArgumentTypeError(msg)
+    if os.path.isdir(abs_arg):
+        msg = "%r is directory path" % arg
+        raise argparse.ArgumentTypeError(msg)
+    return abs_arg
+
+
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(help='sub-command help')
 parser_dump = subparsers.add_parser('dump', help='dump as YAML')
 parser_dump.set_defaults(func=dump_functions)
 parser_dump.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
+parser_dump.add_argument('-c', '--conf', type=file_path, help='config file path')
 
 
 def main(argv=None):

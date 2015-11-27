@@ -10,6 +10,9 @@ current_dir = os.path.abspath(os.getcwd())
 test_dir = os.path.abspath(os.path.dirname(__file__))
 """directory of it"""
 
+samples_dir = os.path.join(test_dir, 'samples')
+"""directory of samples"""
+
 
 # http://code.activestate.com/recipes/576620-changedirectory-context-manager/
 #
