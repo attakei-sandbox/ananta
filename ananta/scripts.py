@@ -5,6 +5,7 @@ import os
 import sys
 import argparse
 import json
+import ConfigParser
 
 
 def dump_functions(args):
@@ -13,7 +14,10 @@ def dump_functions(args):
     import importlib
     import venusian
     from ananta import _collector
-    args.path = os.path.abspath(args.path)
+    if args.conf is not None:
+        config = ConfigParser.SafeConfigParser()
+        config.read(args.conf)
+        _collector.set_defaults(config)
     module_path = args.path.replace(os.getcwd()+'/', '')
     module_name = module_path.replace('/', '.')
     module = importlib.import_module(module_name)

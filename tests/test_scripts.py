@@ -46,8 +46,8 @@ class TestForDumpParser(object):
 class TestForDumpFunction(object):
     def setup_method(self, method):
         import ananta
-        ananta.collector_ = ananta.FunctionCollector()
-        ananta.lambda_config = ananta.collector_.lambda_config
+        ananta._collector = ananta.FunctionCollector()
+        ananta.lambda_config = ananta._collector.lambda_config
         sys.path.append(os.path.join(test_dir, 'samples'))
 
     def teardown_method(self, method):
@@ -74,3 +74,11 @@ class TestForDumpFunction(object):
         out_data = self._run_script(capsys, ['-p', 'singlefunction'])
         assert type(out_data) is list
         assert len(out_data) == 1
+
+    def test_spec_config(self, capsys):
+        out_data = self._run_script(
+            capsys,
+            ['-p', 'with_config', '-c', 'with_config/ananta_conf.ini']
+        )
+        assert type(out_data) is list
+        assert out_data[0]['role'] == 'arn:aws:iam::account-id:role/role-name'

@@ -11,6 +11,7 @@ class FunctionCollector(object):
     """
     def __init__(self):
         self._functions = []
+        self._defaults = {}
 
     def lambda_config(self, name, **kwargs):
         """lambda function decorator
@@ -22,7 +23,7 @@ class FunctionCollector(object):
         function = {
             'name': name
         }
-        function['role'] = kwargs.get('role')
+        function['role'] = kwargs.get('role', self._defaults.get('role'))
 
         def _lambda_reciever(func):
             function['handler'] = '{}.{}'.format(func.__module__.replace('.', '/'), func.__name__)
@@ -39,6 +40,9 @@ class FunctionCollector(object):
     @property
     def functions(self):
         return self._functions
+
+    def set_defaults(self, config):
+        self._defaults['role'] = config.get('ananta', 'role')
 
 _collector = FunctionCollector()
 
