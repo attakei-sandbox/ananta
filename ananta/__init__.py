@@ -42,7 +42,8 @@ class FunctionCollector(object):
         return self._functions
 
     def set_defaults(self, config):
-        self._defaults['role'] = config.get('ananta', 'role')
+        for key, val in config.items('ananta'):
+            self._defaults[key] = val
 
 _collector = FunctionCollector()
 
