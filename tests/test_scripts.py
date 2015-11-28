@@ -58,22 +58,24 @@ class TestForDumpFunction(object):
         from ananta.scripts import dump_functions
         return dump_functions
 
-    def _parse_args(self, *args):
+    def _parse_args(self, args):
         from ananta.scripts import parser
-        return parser.parse_args(['dump'] + list(args))
+        args.insert(0, 'dump')
+        return parser.parse_args(args)
 
     def _run_script(self, capsys, args):
         import json
         with working_directory(os.path.join(test_dir, 'samples')):
-            args = self._parse_args(*args)
+            args = self._parse_args(args)
             self._call_fut()(args)
-        out, err = capsys.readouterr()
+            out, err = capsys.readouterr()
         return json.loads(out)
 
     def test_it(self, capsys):
         out_data = self._run_script(capsys, ['-p', 'singlefunction'])
         assert type(out_data) is list
         assert len(out_data) == 1
+        assert out_data[0]['memory'] == 128
 
     def test_spec_config(self, capsys):
         out_data = self._run_script(

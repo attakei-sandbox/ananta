@@ -11,7 +11,9 @@ class FunctionCollector(object):
     """
     def __init__(self):
         self._functions = []
-        self._defaults = {}
+        self._defaults = {
+            'memory': 128,
+        }
 
     def lambda_config(self, name, **kwargs):
         """lambda function decorator
@@ -24,6 +26,8 @@ class FunctionCollector(object):
             'name': name
         }
         function['role'] = kwargs.get('role', self._defaults.get('role'))
+        for k, v in self._defaults.items():
+            function.setdefault(k, v)
 
         def _lambda_reciever(func):
             function['handler'] = '{}.{}'.format(func.__module__.replace('.', '/'), func.__name__)
