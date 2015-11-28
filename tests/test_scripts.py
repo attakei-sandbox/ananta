@@ -4,7 +4,7 @@
 import os
 import sys
 from pytest import raises
-from . import working_directory, test_dir
+from . import working_directory, test_dir, samples_dir
 
 
 def test_script_func():
@@ -38,12 +38,16 @@ class TestForDumpParser(object):
         parsed = self._call_fut().parse_args(['-p', 'tests'])
         assert parsed.path[0] == '/'
 
+    def test_config_is_not_found(self, capsys):
+        with working_directory(samples_dir):
+            raises(SystemExit, self._call_fut().parse_args, ['-p', 'with_config', '-c', 'not_found'])
+
 
 class TestForDumpFunction(object):
     def setup_method(self, method):
         import ananta
-        ananta.collector_ = ananta.FunctionCollector()
-        ananta.lambda_config = ananta.collector_.lambda_config
+        ananta._collector = ananta.FunctionCollector()
+        ananta.lambda_config = ananta._collector.lambda_config
         sys.path.append(os.path.join(test_dir, 'samples'))
 
     def teardown_method(self, method):
@@ -54,17 +58,29 @@ class TestForDumpFunction(object):
         from ananta.scripts import dump_functions
         return dump_functions
 
-    def _parse_args(self, *args):
+    def _parse_args(self, args):
         from ananta.scripts import parser
-        return parser.parse_args(['dump'] + list(args))
+        args.insert(0, 'dump')
+        return parser.parse_args(args)
 
-    def test_path_default(self, capsys):
+    def _run_script(self, capsys, args):
         import json
         with working_directory(os.path.join(test_dir, 'samples')):
-            args = self._parse_args('-p', 'singlefunction')
+            args = self._parse_args(args)
             self._call_fut()(args)
-        out, err = capsys.readouterr()
-        out_data = json.loads(out)
-        assert out.startswith('[')
+            out, err = capsys.readouterr()
+        return json.loads(out)
+
+    def test_it(self, capsys):
+        out_data = self._run_script(capsys, ['-p', 'singlefunction'])
         assert type(out_data) is list
-        # assert len(out_data) == 1
+        assert len(out_data) == 1
+        assert out_data[0]['memory'] == 128
+
+    def test_spec_config(self, capsys):
+        out_data = self._run_script(
+            capsys,
+            ['-p', 'with_config', '-c', 'with_config/ananta_conf.ini']
+        )
+        assert type(out_data) is list
+        assert out_data[0]['role'] == 'arn:aws:iam::account-id:role/role-name'

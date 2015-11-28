@@ -26,3 +26,19 @@ def test_required():
     assert decorated['name'] == 'my_func'
     assert decorated['handler'] == 'tests/test_collector.lambda_func'
     assert decorated['role'] == 'arn:aws:::::dummy'
+
+
+def test_defaults():
+    from ConfigParser import SafeConfigParser
+    config = SafeConfigParser()
+    config.add_section('ananta')
+    config.set('ananta', 'role', 'test-role')
+    lambda_collection = FunctionCollector()
+    lambda_collection.set_defaults(config)
+
+    @lambda_collection.lambda_config(name='my_func')
+    def lambda_func(event, context):
+        return {}
+
+    decorated = lambda_collection.functions[0]
+    assert decorated['role'] == 'test-role'
