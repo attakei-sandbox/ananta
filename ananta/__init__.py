@@ -15,16 +15,18 @@ class FunctionCollector(object):
             'memory': 128,
         }
 
-    def lambda_config(self, name, **kwargs):
+    def lambda_config(self, func=None, **kwargs):
         """lambda function decorator
 
         :param name: lambda function name
         :type name: srt or unicode
         :rtype: function
         """
-        function = {
-            'name': name
-        }
+        function = {}
+        if func is not None:
+            function['name'] = func.__name__
+        elif 'name' in kwargs:
+            function['name'] = kwargs['name']
         function['role'] = kwargs.get('role', self._defaults.get('role'))
         for k, v in self._defaults.items():
             function.setdefault(k, v)

@@ -72,6 +72,12 @@ class TestForDumpFunction(object):
         return json.loads(out)
 
     def test_it(self, capsys):
+        out_data = self._run_script(capsys, ['-p', 'minimum'])
+        assert type(out_data) is list
+        assert len(out_data) == 1
+        assert out_data[0]['name'] == 'test_funcs'
+
+    def test_with_name(self, capsys):
         out_data = self._run_script(capsys, ['-p', 'singlefunction'])
         assert type(out_data) is list
         assert len(out_data) == 1
