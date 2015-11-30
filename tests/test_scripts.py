@@ -75,7 +75,7 @@ class TestForDumpFunction(object):
         out_data = self._run_script(capsys, ['-p', 'minimum'])
         assert type(out_data) is list
         assert len(out_data) == 1
-        assert out_data[0]['Name'] == 'test_funcs'
+        assert out_data[0]['FunctionName'] == 'test_funcs'
 
     def test_with_name(self, capsys):
         out_data = self._run_script(capsys, ['-p', 'singlefunction'])
