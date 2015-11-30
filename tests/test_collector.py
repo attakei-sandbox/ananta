@@ -7,7 +7,7 @@ from ananta import FunctionCollector
 def test_structures():
     lambda_collection = FunctionCollector()
 
-    @lambda_collection.lambda_config(name='my_func')
+    @lambda_collection.lambda_config(Name='my_func')
     def lambda_func(event, context):
         return {}
 
@@ -18,27 +18,27 @@ def test_structures():
 def test_required():
     lambda_collection = FunctionCollector()
 
-    @lambda_collection.lambda_config(name='my_func', role='arn:aws:::::dummy')
+    @lambda_collection.lambda_config(Name='my_func', Role='arn:aws:::::dummy')
     def lambda_func(event, context):
         return {}
 
     decorated = lambda_collection.functions[0]
-    assert decorated['name'] == 'my_func'
-    assert decorated['handler'] == 'tests/test_collector.lambda_func'
-    assert decorated['role'] == 'arn:aws:::::dummy'
+    assert decorated['Name'] == 'my_func'
+    assert decorated['Handler'] == 'tests/test_collector.lambda_func'
+    assert decorated['Role'] == 'arn:aws:::::dummy'
 
 
 def test_defaults():
     from ConfigParser import SafeConfigParser
     config = SafeConfigParser()
     config.add_section('ananta')
-    config.set('ananta', 'role', 'test-role')
+    config.set('ananta', 'Role', 'test-role')
     lambda_collection = FunctionCollector()
     lambda_collection.set_defaults(config)
 
-    @lambda_collection.lambda_config(name='my_func')
+    @lambda_collection.lambda_config(Name='my_func')
     def lambda_func(event, context):
         return {}
 
     decorated = lambda_collection.functions[0]
-    assert decorated['role'] == 'test-role'
+    assert decorated['Role'] == 'test-role'

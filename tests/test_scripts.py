@@ -75,13 +75,13 @@ class TestForDumpFunction(object):
         out_data = self._run_script(capsys, ['-p', 'minimum'])
         assert type(out_data) is list
         assert len(out_data) == 1
-        assert out_data[0]['name'] == 'test_funcs'
+        assert out_data[0]['Name'] == 'test_funcs'
 
     def test_with_name(self, capsys):
         out_data = self._run_script(capsys, ['-p', 'singlefunction'])
         assert type(out_data) is list
         assert len(out_data) == 1
-        assert out_data[0]['memory'] == 128
+        assert out_data[0]['MemorySize'] == 128
 
     def test_spec_config(self, capsys):
         out_data = self._run_script(
@@ -89,4 +89,4 @@ class TestForDumpFunction(object):
             ['-p', 'with_config', '-c', 'with_config/ananta_conf.ini']
         )
         assert type(out_data) is list
-        assert out_data[0]['role'] == 'arn:aws:iam::account-id:role/role-name'
+        assert out_data[0]['Role'] == 'arn:aws:iam::account-id:role/role-name'

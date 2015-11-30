@@ -12,7 +12,7 @@ class FunctionCollector(object):
     def __init__(self):
         self._functions = []
         self._defaults = {
-            'memory': 128,
+            'MemorySize': 128,
         }
 
     def lambda_config(self, func=None, **kwargs):
@@ -24,15 +24,15 @@ class FunctionCollector(object):
         """
         function = {}
         if func is not None:
-            function['name'] = func.__name__
-        elif 'name' in kwargs:
-            function['name'] = kwargs['name']
-        function['role'] = kwargs.get('role', self._defaults.get('role'))
+            function['Name'] = func.__name__
+        elif 'Name' in kwargs:
+            function['Name'] = kwargs['Name']
+        function['Role'] = kwargs.get('Role', self._defaults.get('role'))
         for k, v in self._defaults.items():
             function.setdefault(k, v)
 
         def _lambda_reciever(func):
-            function['handler'] = '{}.{}'.format(func.__module__.replace('.', '/'), func.__name__)
+            function['Handler'] = '{}.{}'.format(func.__module__.replace('.', '/'), func.__name__)
 
             @functools.wraps(func)
             def _func(event, context):
