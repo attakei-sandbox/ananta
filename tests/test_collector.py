@@ -31,6 +31,7 @@ def test_required():
 def test_defaults():
     from ConfigParser import SafeConfigParser
     config = SafeConfigParser()
+    config.optionxform = str
     config.add_section('ananta')
     config.set('ananta', 'Role', 'test-role')
     lambda_collection = FunctionCollector()

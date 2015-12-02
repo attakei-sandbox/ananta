@@ -16,6 +16,7 @@ def dump_functions(args):
     from ananta import _collector
     if args.conf is not None:
         config = ConfigParser.SafeConfigParser()
+        config.optionxform = str
         config.read(args.conf)
         _collector.set_defaults(config)
     module_path = args.path.replace(os.getcwd()+'/', '')
