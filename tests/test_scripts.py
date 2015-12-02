@@ -90,3 +90,6 @@ class TestForDumpFunction(object):
         )
         assert type(out_data) is list
         assert out_data[0]['Role'] == 'arn:aws:iam::account-id:role/role-name'
+        assert 'FunctionName' in out_data[0]
+        assert 'Role' in out_data[0]
+        assert 'role' not in out_data[0]
