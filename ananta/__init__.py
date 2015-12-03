@@ -28,6 +28,7 @@ class FunctionCollector(object):
         elif 'FunctionName' in kwargs:
             function['FunctionName'] = kwargs['FunctionName']
         function['Role'] = kwargs.get('Role', self._defaults.get('Role'))
+        function['Description'] = kwargs.get('Description', self._defaults.get('Description', ''))
         for k, v in self._defaults.items():
             function.setdefault(k, v)
 
