@@ -61,9 +61,9 @@ class PyTest(TestCommand):
 
 
 setup(
-    name='Ananta',
+    name='ananta',
     version=find_version('ananta/__init__.py'),
-    url='https://github.com/attakei/Ananta',
+    url='https://github.com/attakei/ananta',
     description='AWS Lambda packager',
     long_description=long_description,
     author='attakei',
