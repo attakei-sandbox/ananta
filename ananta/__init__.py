@@ -13,6 +13,7 @@ class FunctionCollector(object):
         self._functions = []
         self._defaults = {
             'MemorySize': 128,
+            'Description': '',
         }
 
     def lambda_config(self, func=None, **kwargs):
@@ -23,14 +24,15 @@ class FunctionCollector(object):
         :rtype: function
         """
         function = {}
+        # Custom values
         if func is not None:
             function['FunctionName'] = func.__name__
         elif 'FunctionName' in kwargs:
             function['FunctionName'] = kwargs['FunctionName']
-        function['Role'] = kwargs.get('Role', self._defaults.get('Role'))
-        function['Description'] = kwargs.get('Description', self._defaults.get('Description', ''))
-        for k, v in self._defaults.items():
-            function.setdefault(k, v)
+        # Default values
+        function.update(self._defaults)
+        # Decorated values
+        function.update(kwargs)
 
         def _lambda_reciever(func):
             function['Handler'] = '{}.{}'.format(func.__module__.replace('.', '/'), func.__name__)
