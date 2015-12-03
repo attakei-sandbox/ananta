@@ -79,6 +79,7 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     install_requires=package_requires,
     tests_require=test_requires,
+    extras_require={'test': test_requires},
     cmdclass={'test': PyTest},
     entry_points={
         "console_scripts": [
