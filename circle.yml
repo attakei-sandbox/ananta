@@ -1,8 +1,5 @@
 machine:
   python:
-dependencies:
-  pre:
-    - pip install -r tests/requirements.txt
 test:
   override:
     - tox
