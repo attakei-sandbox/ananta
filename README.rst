@@ -15,13 +15,15 @@ Usage
 -----
 
 0. Install
+^^^^^^^^^^
 
-.. code-block:: none
+.. code-block:: sh
 
    $ pip install git+https://github.com/attakei/Ananta.git
    $ pip install -e .
 
 1. Decorate to lambda function
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -32,8 +34,10 @@ Usage
        do_it()
 
 2. Dump
+^^^^^^^
 
-.. code-block:: none
+.. code-block:: bash
 
    $ ananta dump -p yourproject
    [{"name":"my_lambda_func", "handler":"yourproject.my_lambda_function"}]
+
