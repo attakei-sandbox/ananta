@@ -24,7 +24,7 @@ def dump_functions(args):
     module = importlib.import_module(module_name)
     scanner = venusian.Scanner()
     scanner.scan(module)
-    sys.stdout.write(json.dumps(_collector.functions))
+    sys.stdout.write(json.dumps(_collector.functions, ensure_ascii=False))
 
 
 def directory_path(arg):
