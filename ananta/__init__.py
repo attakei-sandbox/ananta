@@ -52,7 +52,10 @@ class FunctionCollector(object):
 
     def set_defaults(self, config):
         for key, val in config.items('ananta'):
-            self._defaults[key] = val
+            if key in ('MemorySize', 'Timeout'):
+                self._defaults[key] = int(val)
+            else:
+                self._defaults[key] = val
 
 _collector = FunctionCollector()
 
