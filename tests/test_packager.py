@@ -4,7 +4,7 @@
 # import os
 # import sys
 from pytest import raises
-from . import working_directory, test_dir, samples_dir
+from . import working_directory, samples_dir
 
 
 class TestForPackageParser(object):

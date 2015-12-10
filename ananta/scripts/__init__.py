@@ -6,6 +6,7 @@ import sys
 import argparse
 import json
 import ConfigParser
+from .package import package_sources
 
 
 def dump_functions(args):
@@ -25,12 +26,6 @@ def dump_functions(args):
     scanner = venusian.Scanner()
     scanner.scan(module)
     sys.stdout.write(json.dumps(_collector.functions, ensure_ascii=False))
-
-
-def package_sources(args):
-    """Generate zip file included lambda functions, dependencies and function.json
-    """
-    pass
 
 
 def directory_path(arg):
