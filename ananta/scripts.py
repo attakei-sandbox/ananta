@@ -27,6 +27,12 @@ def dump_functions(args):
     sys.stdout.write(json.dumps(_collector.functions, ensure_ascii=False))
 
 
+def package_sources(args):
+    """Generate zip file included lambda functions, dependencies and function.json
+    """
+    pass
+
+
 def directory_path(arg):
     """ArgumentParser type. It check if arg is exists directory path.
 
@@ -71,6 +77,10 @@ parser_dump = subparsers.add_parser('dump', help='dump as YAML')
 parser_dump.set_defaults(func=dump_functions)
 parser_dump.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
 parser_dump.add_argument('-c', '--conf', type=file_path, help='config file path')
+parser_package = subparsers.add_parser('package', help='package sources to zip')
+parser_dump.set_defaults(func=package_sources)
+parser_package.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
+parser_package.add_argument('-c', '--conf', type=file_path, help='config file path')
 
 
 def main(argv=None):
