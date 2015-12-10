@@ -9,7 +9,10 @@ from setuptools.command.test import test as TestCommand
 
 here = os.path.abspath(os.path.dirname(__file__))
 package_requires = [
-    'venusian'
+    'venusian',
+    # TODO: Use to package, but not need in zip file
+    'pip',
+    'boto3',
 ]
 test_requires = [
     'pytest',
