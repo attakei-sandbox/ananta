@@ -54,6 +54,6 @@ class TestForDumpFunction(object):
             self._call_fut()(args)
 
     def test_it(self):
-        self._run_script(['-p', 'minimum'])
+        self._run_script(['-p', 'minimum_arc'])
         test_path = os.path.join(test_dir, 'samples')
-        assert os.path.exists(os.path.join(test_path, 'minimum.zip')) is True
+        assert os.path.exists(os.path.join(test_path, 'minimum_arc.zip')) is True

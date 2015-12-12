@@ -55,7 +55,7 @@ class TestForDumpFunction(object):
         sys.path = sys.path[0:-1]
 
     def _call_fut(self):
-        from ananta.scripts import dump_functions
+        from ananta.scripts.dump import dump_functions
         return dump_functions
 
     def _parse_args(self, args):
