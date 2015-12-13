@@ -12,7 +12,7 @@ package_requires = [
     'venusian',
     # TODO: Use to package, but not need in zip file
     'pip',
-    'boto3',
+    # 'boto3',
 ]
 test_requires = [
     'pytest',

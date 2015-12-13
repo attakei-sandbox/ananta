@@ -21,6 +21,8 @@ def package_sources(args):
         from .dump import dump_functions
         dump_functions(args, fp)
     # パッケージの作成
+    # from pip import main as pip_main
+    # pip_main('install -t ' + package_dir + ' .'.split(' '))
     package_file = './minimum_arc.zip'
     with zipfile.ZipFile(package_file, 'w') as zfp:
         for root, dirs, files in os.walk(package_dir):
