@@ -3,7 +3,6 @@
 """
 import os
 import tempfile
-import subprocess
 import shutil
 import zipfile
 
@@ -19,8 +18,8 @@ def package_sources(args):
     package_dir = tempfile.mkdtemp()
     functions_dump_path = os.path.join(package_dir, 'functions.json')
     with open(functions_dump_path, 'w') as fp:
-        command = subprocess.Popen(['ananta', 'dump', '-c', './ananta.ini', '-p', 'sharequiz'], stdout=fp)
-        command.wait()
+        from .dump import dump_functions
+        dump_functions(args, fp)
     # パッケージの作成
     package_file = './minimum_arc.zip'
     with zipfile.ZipFile(package_file, 'w') as zfp:

@@ -31,9 +31,13 @@ class TestForPackageParser(object):
 class TestForDumpFunction(object):
     def setup_method(self, method):
         import ananta
+        import shutil
+        import glob
         ananta._collector = ananta.FunctionCollector()
         ananta.lambda_config = ananta._collector.lambda_config
         sys.path.append(os.path.join(test_dir, 'samples'))
+        for path in glob.iglob(os.path.join(test_dir, 'samples', '*.zip')):
+            shutil.rmtree(path, ignore_errors=True)
 
     def teardown_method(self, method):
         import sys

@@ -9,7 +9,7 @@ import ConfigParser
 import venusian
 
 
-def dump_functions(args):
+def dump_functions(args, stream=None):
     """Scan functions decorated by lambda_config, and dump as json
     """
     from ananta import _collector
@@ -23,4 +23,6 @@ def dump_functions(args):
     module = importlib.import_module(module_name)
     scanner = venusian.Scanner()
     scanner.scan(module)
-    sys.stdout.write(json.dumps(_collector.functions, ensure_ascii=False))
+    if stream is None:
+        stream = sys.stdout
+    stream.write(json.dumps(_collector.functions, ensure_ascii=False))
