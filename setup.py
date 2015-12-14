@@ -11,7 +11,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 package_requires = [
     'venusian',
     # TODO: Use to package, but not need in zip file
-    'pip',
+    # 'pip',
     # 'boto3',
 ]
 test_requires = [

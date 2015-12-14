@@ -18,6 +18,7 @@ def dump_functions(args, stream=None):
         config.optionxform = str
         config.read(args.conf)
         _collector.set_defaults(config)
+    sys.path.insert(0, args.path)
     module_path = args.path.replace(os.getcwd()+'/', '')
     module_name = module_path.replace('/', '.')
     module = importlib.import_module(module_name)

@@ -53,7 +53,7 @@ parser_dump.set_defaults(func=dump_functions)
 parser_dump.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
 parser_dump.add_argument('-c', '--conf', type=file_path, help='config file path')
 parser_package = subparsers.add_parser('package', help='package sources to zip')
-parser_dump.set_defaults(func=package_sources)
+parser_package.set_defaults(func=package_sources)
 parser_package.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
 parser_package.add_argument('-c', '--conf', type=file_path, help='config file path')
 

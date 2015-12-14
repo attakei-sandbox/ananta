@@ -16,13 +16,13 @@ def package_sources(args):
     * Generate zip archive from workspace
     """
     package_dir = tempfile.mkdtemp()
+    # パッケージの作成
+    from pip import main as pip_main
+    pip_main(['install', '-t', package_dir, args.path])
     functions_dump_path = os.path.join(package_dir, 'functions.json')
     with open(functions_dump_path, 'w') as fp:
         from .dump import dump_functions
         dump_functions(args, fp)
-    # パッケージの作成
-    # from pip import main as pip_main
-    # pip_main('install -t ' + package_dir + ' .'.split(' '))
     package_file = './minimum_arc.zip'
     with zipfile.ZipFile(package_file, 'w') as zfp:
         for root, dirs, files in os.walk(package_dir):
