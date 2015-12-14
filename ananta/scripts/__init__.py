@@ -6,7 +6,7 @@ import sys
 import argparse
 import json
 import ConfigParser
-
+from .package import package_sources
 
 def dump_functions(args):
     """Scan functions decorated by lambda_config, and dump as json
@@ -71,6 +71,9 @@ parser_dump = subparsers.add_parser('dump', help='dump as YAML')
 parser_dump.set_defaults(func=dump_functions)
 parser_dump.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
 parser_dump.add_argument('-c', '--conf', type=file_path, help='config file path')
+parser_package = subparsers.add_parser('package', help='dump as YAML')
+parser_package.set_defaults(func=package_sources)
+parser_package.add_argument('-c', '--conf', type=file_path, help='config file path')
 
 
 def main(argv=None):
