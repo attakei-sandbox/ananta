@@ -10,6 +10,10 @@ __version__ = '0.0.1'
 class Registry(object):
     """Lambda functions registry
     """
+    DEFAULTS = {
+        'MemorySize': 128,
+    }
+
     def __init__(self):
         self.functions = {}
 
@@ -27,7 +31,8 @@ class Registry(object):
         for name, data in self.functions.items():
             params = {}
             params['FunctionName'] = data['func'].__name__
-            params.setdefault('MemorySize', 128)
+            for key, value in self.DEFAULTS.items():
+                params.setdefault(key, value)
             funcs_.append(params)
         return json.dumps(funcs_)
 
