@@ -2,6 +2,7 @@
 """Ananta : AWS Lambda packager
 """
 import functools
+import json
 
 __version__ = '0.0.1'
 
@@ -18,6 +19,14 @@ class Registry(object):
             'func': func,
             'params': params,
         }
+
+    def jsonify(self):
+        """Return functions as json, to use boto3
+        """
+        funcs_ = []
+        for name, data in self.functions.items():
+            funcs_.append({})
+        return json.dumps(funcs_)
 
 
 class FunctionCollector(object):
