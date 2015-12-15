@@ -48,11 +48,11 @@ def lambda_function(**kwargs):
     :rtype: function
     """
     def _lambda_receiver(func):
+        kwargs.setdefault('FunctionName', func.__name__)
         kwargs['Handler'] = '{}.{}'.format(func.__module__.replace('.', '/'), func.__name__)
 
         def _scan_function(scanner, name, ob):
-            name = kwargs.get('FunctionName', name)
-            scanner.registry.add(name, ob, kwargs)
+            scanner.registry.add(kwargs.get('FunctionName', name), ob, kwargs)
 
         venusian.attach(func, _scan_function)
         return func
