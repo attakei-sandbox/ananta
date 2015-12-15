@@ -39,6 +39,21 @@ class Registry(object):
         return json.dumps(funcs_)
 
 
+def lambda_function(func=None, **kwargs):
+    """lambda function decorator
+
+    :param name: lambda function name
+    :type name: srt or unicode
+    :rtype: function
+    """
+    def _lambda_with_args(func):
+        def _lambda_no_args(event, context):
+            return func(event, context)
+
+        return _lambda_no_args
+    return _lambda_with_args
+
+
 class FunctionCollector(object):
     """Lambda functions collector
     """
