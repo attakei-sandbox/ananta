@@ -52,3 +52,4 @@ class TestForJsonify(object):
         registry.add('func_name', _test_structures, {})
         loaded = json.loads(registry.jsonify())
         assert loaded[0]['MemorySize'] == 128
+        assert loaded[0]['Timeout'] == 3

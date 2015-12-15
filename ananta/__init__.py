@@ -10,8 +10,10 @@ __version__ = '0.0.1'
 class Registry(object):
     """Lambda functions registry
     """
+
     DEFAULTS = {
         'MemorySize': 128,
+        'Timeout': 3,
     }
 
     def __init__(self):
