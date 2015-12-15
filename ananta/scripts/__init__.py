@@ -6,14 +6,15 @@ import sys
 import argparse
 import json
 import ConfigParser
+from .. import Registry
 from .package import package_sources
+
 
 def dump_functions(args):
     """Scan functions decorated by lambda_config, and dump as json
     """
     import importlib
     import venusian
-    from ananta import _collector
     if args.conf is not None:
         config = ConfigParser.SafeConfigParser()
         config.optionxform = str
@@ -22,9 +23,10 @@ def dump_functions(args):
     module_path = args.path.replace(os.getcwd()+'/', '')
     module_name = module_path.replace('/', '.')
     module = importlib.import_module(module_name)
-    scanner = venusian.Scanner()
+    registry = Registry()
+    scanner = venusian.Scanner(registry=registry)
     scanner.scan(module)
-    sys.stdout.write(json.dumps(_collector.functions, ensure_ascii=False))
+    sys.stdout.write(json.dumps(registry.registered, ensure_ascii=False))
 
 
 def directory_path(arg):

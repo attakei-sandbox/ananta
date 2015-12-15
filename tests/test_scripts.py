@@ -45,9 +45,9 @@ class TestForDumpParser(object):
 
 class TestForDumpFunction(object):
     def setup_method(self, method):
-        import ananta
-        ananta._collector = ananta.FunctionCollector()
-        ananta.lambda_config = ananta._collector.lambda_config
+        # import ananta
+        # ananta._collector = ananta.FunctionCollector()
+        # ananta.lambda_config = ananta._collector.lambda_config
         sys.path.append(os.path.join(test_dir, 'samples'))
 
     def teardown_method(self, method):

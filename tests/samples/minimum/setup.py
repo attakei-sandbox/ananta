@@ -14,6 +14,6 @@ setup(
     classifiers=[
     ],
     keywords='aws lambda',
-    py_modules = ['minimum'],
+    py_modules=['minimum'],
     install_requires=[],
 )
