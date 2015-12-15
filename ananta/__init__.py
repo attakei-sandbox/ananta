@@ -48,6 +48,8 @@ def lambda_function(**kwargs):
     :rtype: function
     """
     def _lambda_receiver(func):
+        kwargs['Handler'] = '{}.{}'.format(func.__module__.replace('.', '/'), func.__name__)
+
         def _scan_function(scanner, name, ob):
             name = kwargs.get('FunctionName', name)
             scanner.registry.add(name, ob, kwargs)

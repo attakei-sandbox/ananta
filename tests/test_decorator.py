@@ -22,3 +22,8 @@ def test_attach_function_name():
     scanner.scan(tests_scan)
     assert 'lambda_func_1' in registry.functions
     assert 'my_func_2' in registry.functions
+    params = registry.functions.get('my_func_2').get('params')
+    assert 'Handler' in params
+    assert params['Handler'] == 'tests/tests_scan/sub.lambda_func_2'
+    params1 = registry.functions.get('lambda_func_1').get('params')
+    assert params1['Handler'] == 'tests/tests_scan/sub.lambda_func_1'
