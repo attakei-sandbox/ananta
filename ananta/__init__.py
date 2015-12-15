@@ -25,7 +25,10 @@ class Registry(object):
         """
         funcs_ = []
         for name, data in self.functions.items():
-            funcs_.append({})
+            params = {}
+            params['FunctionName'] = data['func'].__name__
+            params.setdefault('MemorySize', 128)
+            funcs_.append(params)
         return json.dumps(funcs_)
 
 

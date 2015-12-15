@@ -34,3 +34,21 @@ class TestForJsonify(object):
         registry.add('func_name', _test_structures, {})
         loaded = json.loads(registry.jsonify())
         assert type(loaded[0]) is dict
+        assert loaded[0]['FunctionName'] == '_test_structures'
+
+        def _test_structures2(arg1, arg2):
+            pass
+
+        registry.add('func_name', _test_structures2, {})
+        loaded = json.loads(registry.jsonify())
+        assert loaded[0]['FunctionName'] == '_test_structures2'
+
+    def test_has_default(self):
+        registry = Registry()
+
+        def _test_structures(arg1, arg2):
+            pass
+
+        registry.add('func_name', _test_structures, {})
+        loaded = json.loads(registry.jsonify())
+        assert loaded[0]['MemorySize'] == 128
