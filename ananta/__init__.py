@@ -3,6 +3,7 @@
 """
 import functools
 import json
+import venusian
 
 __version__ = '0.0.1'
 
@@ -39,19 +40,22 @@ class Registry(object):
         return json.dumps(funcs_)
 
 
-def lambda_function(func=None, **kwargs):
+def lambda_function(**kwargs):
     """lambda function decorator
 
     :param name: lambda function name
     :type name: srt or unicode
     :rtype: function
     """
-    def _lambda_with_args(func):
-        def _lambda_no_args(event, context):
-            return func(event, context)
+    def _lambda_receiver(func):
+        def _scan_function(scanner, name, ob):
+            name = kwargs.get('FunctionName', name)
+            scanner.registry.add(name, ob, kwargs)
 
-        return _lambda_no_args
-    return _lambda_with_args
+        venusian.attach(func, _scan_function)
+        return func
+
+    return _lambda_receiver
 
 
 class FunctionCollector(object):
