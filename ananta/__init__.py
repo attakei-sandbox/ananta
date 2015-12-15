@@ -6,6 +6,20 @@ import functools
 __version__ = '0.0.1'
 
 
+class Registry(object):
+    """Lambda functions registry
+    """
+    def __init__(self):
+        self.functions = {}
+
+    def add(self, name, func, params):
+        self.functions[name] = {
+            'name': name,
+            'func': func,
+            'params': params,
+        }
+
+
 class FunctionCollector(object):
     """Lambda functions collector
     """
