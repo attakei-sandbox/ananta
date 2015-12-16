@@ -18,6 +18,10 @@ class Registry(object):
 
     def __init__(self):
         self.functions = {}
+        self._defaults = {}
+
+    def set_default(self, key, value):
+        self._defaults[key] = value
 
     def add(self, name, func, params):
         self.functions[name] = {
@@ -33,6 +37,8 @@ class Registry(object):
         for name, data in self.functions.items():
             params = {}
             params['FunctionName'] = data['func'].__name__
+            for key, value in self._defaults.items():
+                params.setdefault(key, value)
             for key, value in self.DEFAULTS.items():
                 params.setdefault(key, value)
             funcs_.append(params)

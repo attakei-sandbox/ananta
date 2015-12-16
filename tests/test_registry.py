@@ -53,3 +53,14 @@ class TestForJsonify(object):
         loaded = json.loads(registry.jsonify())
         assert loaded[0]['MemorySize'] == 128
         assert loaded[0]['Timeout'] == 3
+
+    def test_set_config(self):
+        registry = Registry()
+        registry.set_default('Role', 'arn:xxx')
+
+        def _test_structures(arg1, arg2):
+            pass
+
+        registry.add('func_name', _test_structures, {})
+        loaded = json.loads(registry.jsonify())
+        assert loaded[0]['Role'] == 'arn:xxx'
