@@ -7,6 +7,7 @@ import argparse
 import ConfigParser
 
 from .report import report_functions
+from .build import build_packages
 from .. import Registry
 # def dump_functions(args):
 #     """Scan functions decorated by lambda_config, and dump as json
@@ -71,6 +72,10 @@ parser.add_argument('-c', '--conf', type=file_path, help='config file path')
 
 parser_report = subparsers.add_parser('report', help='Report functions')
 parser_report.set_defaults(func=report_functions)
+parser_report.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
+
+parser_report = subparsers.add_parser('build', help='Build functions and packages')
+parser_report.set_defaults(func=build_packages)
 parser_report.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
 
 
