@@ -4,6 +4,7 @@
 import os
 import sys
 import argparse
+import ConfigParser
 
 from .report import report_functions
 from .. import Registry
@@ -71,10 +72,6 @@ parser.add_argument('-c', '--conf', type=file_path, help='config file path')
 parser_report = subparsers.add_parser('report', help='Report functions')
 parser_report.set_defaults(func=report_functions)
 parser_report.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
-# parser_dump = subparsers.add_parser('dump', help='dump as YAML')
-# parser_dump.set_defaults(func=dump_functions)
-# parser_dump.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
-# parser_dump.add_argument('-c', '--conf', type=file_path, help='config file path')
 
 
 def main(argv=None):
@@ -90,4 +87,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     registry = Registry()
-    return args.func(registry, args)
+    config = None
+    if args.conf is not None:
+        config = ConfigParser.SafeConfigParser()
+        config.optionxform = str
+        config.read(args.conf)
+    return args.func(registry, config, args)

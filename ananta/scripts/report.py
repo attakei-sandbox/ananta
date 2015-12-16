@@ -13,15 +13,19 @@ def module_from_path(path):
     return importlib.import_module(module_path)
 
 
-def report_functions(registry, args):
+def report_functions(registry, config, args):
+    if config is not None:
+        for key, val in config.items('ananta:function'):
+            registry.set_default(key, val)
     module = module_from_path(args.path)
     scanner = venusian.Scanner(registry=registry)
     scanner.scan(module)
-    display_as_test(registry)
+    display_as_test(registry.jsonify())
 
 
-def display_as_test(registry):
-    for name, function in registry.functions.items():
-        params = function['params']
-        print('Function : ' + name)
-        print('\thandler: ' + params['Handler'])
+def display_as_test(json_data):
+    import json
+    for function in json.loads(json_data):
+        print('Function : ' + function['FunctionName'])
+        for key, val in function.items():
+            print('\t{}: {}'.format(key, val))
