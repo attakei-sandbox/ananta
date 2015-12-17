@@ -13,7 +13,7 @@ def module_from_path(path):
     return importlib.import_module(module_path)
 
 
-def report_functions(registry, config, args):
+def check_functions(registry, config, args):
     if config is not None:
         for key, val in config.items('ananta:function'):
             registry.set_default(key, val)

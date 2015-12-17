@@ -6,7 +6,7 @@ import sys
 import argparse
 import ConfigParser
 
-from .report import report_functions
+from .check import check_functions
 from .build import build_packages
 from .. import Registry
 # def dump_functions(args):
@@ -70,13 +70,16 @@ parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(help='sub-command help')
 parser.add_argument('-c', '--conf', type=file_path, help='config file path')
 
-parser_report = subparsers.add_parser('report', help='Report functions')
-parser_report.set_defaults(func=report_functions)
-parser_report.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
+parser_check = subparsers.add_parser('check', help='Check handler functions')
+parser_check.set_defaults(func=check_functions)
+parser_check.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
 
 parser_report = subparsers.add_parser('build', help='Build functions and packages')
 parser_report.set_defaults(func=build_packages)
-parser_report.add_argument('-p', '--path', type=directory_path, required=False, default=None, help='target module path')
+parser_report.add_argument(
+    '-p', '--path', type=directory_path, required=False, default=None,
+    help='target module path'
+)
 
 
 def main(argv=None):
