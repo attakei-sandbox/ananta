@@ -76,7 +76,7 @@ parser_report.add_argument('-p', '--path', type=directory_path, required=True, h
 
 parser_report = subparsers.add_parser('build', help='Build functions and packages')
 parser_report.set_defaults(func=build_packages)
-parser_report.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
+parser_report.add_argument('-p', '--path', type=directory_path, required=False, default=None, help='target module path')
 
 
 def main(argv=None):
