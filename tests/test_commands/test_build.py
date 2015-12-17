@@ -33,6 +33,9 @@ class TestForBuild(object):
 
     def test_with_setup(self):
         test_package = os.path.join(samples_dir, 'minimum')
+        package_path = os.path.join(test_package, 'package.zip')
+        shutil.rmtree(package_path, ignore_errors=True)
         with working_directory(test_package):
             args = DictObject(path=self.target)
             self._call_fut(args)
+        assert os.path.exists(package_path)
