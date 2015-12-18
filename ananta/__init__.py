@@ -30,7 +30,6 @@ class Registry(object):
             'params': params,
         }
 
-
     def jsonify(self):
         """Return functions as json, to use boto3
         """
