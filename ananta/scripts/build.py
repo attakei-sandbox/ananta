@@ -2,6 +2,7 @@
 """
 """
 from __future__ import unicode_literals
+import sys
 import os
 import glob
 import shutil
@@ -25,6 +26,7 @@ def build_packages(registry, config, args):
 def scan_all(registry, package_dir):
     import venusian
     modules = []
+    sys.path.append(package_dir)
     for path in glob.glob(os.path.join(package_dir, '*')):
         if os.path.isdir(path) and os.path.exists(os.path.join(path, '__init__.py')):
             module_name = os.path.basename(path)
