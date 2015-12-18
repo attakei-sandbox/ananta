@@ -30,13 +30,14 @@ class Registry(object):
             'params': params,
         }
 
+
     def jsonify(self):
         """Return functions as json, to use boto3
         """
         funcs_ = []
         for name, data in self.functions.items():
-            params = {}
-            params['FunctionName'] = data['func'].__name__
+            params = data['params']
+            params.setdefault('FunctionName', data['func'].__name__)
             for key, value in self._defaults.items():
                 params.setdefault(key, value)
             for key, value in self.DEFAULTS.items():
