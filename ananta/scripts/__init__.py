@@ -8,6 +8,7 @@ import ConfigParser
 
 from .check import check_functions
 from .build import build_packages
+from .report import report_functions
 from .. import Registry
 # def dump_functions(args):
 #     """Scan functions decorated by lambda_config, and dump as json
@@ -74,8 +75,15 @@ parser_check = subparsers.add_parser('check', help='Check handler functions')
 parser_check.set_defaults(func=check_functions)
 parser_check.add_argument('-p', '--path', type=directory_path, required=True, help='target module path')
 
-parser_report = subparsers.add_parser('build', help='Build functions and packages')
-parser_report.set_defaults(func=build_packages)
+parser_build = subparsers.add_parser('build', help='Build functions and packages')
+parser_build.set_defaults(func=build_packages)
+parser_build.add_argument(
+    '-p', '--path', type=directory_path, required=False, default=None,
+    help='target module path'
+)
+
+parser_report = subparsers.add_parser('report', help='Build functions and packages')
+parser_report.set_defaults(func=report_functions)
 parser_report.add_argument(
     '-p', '--path', type=directory_path, required=False, default=None,
     help='target module path'
