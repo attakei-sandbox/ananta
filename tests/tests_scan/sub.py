@@ -1,14 +1,14 @@
 # -*- coding:utf8 -*-
 """decorated functions test_scan
 """
-from ..test_scanner import lambda_config
+from ananta import lambda_function
 
 
-@lambda_config(FunctionName='my_func_1')
+@lambda_function()
 def lambda_func_1(event, context):
     return {}
 
 
-@lambda_config(FunctionName='my_func_2')
+@lambda_function(FunctionName='my_func_2')
 def lambda_func_2(event, context):
     return {}

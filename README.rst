@@ -1,6 +1,8 @@
 Ananta
 ======
 
+(Current version doesn't have all features to deploy at AWS)
+
 AWS Lambda packaging library and tools
 
 
@@ -8,6 +10,7 @@ Requirements
 ------------
 
 - Python 2.7
+- pip (to run commands)
 - boto3 (to run commands)
 
 
@@ -27,17 +30,22 @@ Usage
 
 .. code-block:: python
 
-   from ananta import lambda_config
+   from ananta import lamnda_function
 
-   @lambda_config(FunctionName='my_lambda_func', Role='arn:aws:::your:lambda:exec:role')
+   @lamnda_function(FunctionName='my_lambda_func', Role='arn:aws:::your:lambda:exec:role')
    def my_lambda_function(event, context):
        do_it()
 
-2. Dump
-^^^^^^^
+2. Build zip package to use for AWS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
-   $ ananta dump -p yourproject
-   [{"FunctionName":"my_lambda_func", "Handler":"yourproject.my_lambda_function"}]
+   $ ananta build
+   $ ls -l
+   ... package.zip ...
 
+3. Deploy to AWS Lambda
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Not implemented
