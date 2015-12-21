@@ -6,7 +6,7 @@ import re
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
-
+dev_version = 1
 here = os.path.abspath(os.path.dirname(__file__))
 package_requires = [
     'venusian'
@@ -26,13 +26,17 @@ if os.path.exists(readme_path):
 
 
 def find_version(*file_paths):
+    if os.environ.get('PRODUCTION', '0') == '1':
+        suffix = ''
+    else:
+        suffix = '.dev' + str(dev_version)
     version_file_path = os.path.join(*file_paths)
     try:
         with codecs.open(version_file_path) as fp:
             version_file = fp.read()
         version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", version_file, re.M)
         if version_match:
-            return version_match.group(1)
+            return version_match.group(1) + suffix
     except OSError:
         raise RuntimeError("Unable to find version string.")
     raise RuntimeError("Unable to find version string.")
