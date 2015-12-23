@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 import zipfile
 import json
+import logging
 
 
 __author__ = 'attakei'
@@ -19,12 +20,24 @@ def deploy_functions(registry, config, args):
     with open(args.path, 'rb') as fp:
         functions_code = fp.read()
     for function_info in functions_list:
+        logging.info(function_info['FunctionName'])
         if 'MemorySize' in function_info:
             function_info['MemorySize'] = int(function_info['MemorySize'])
         if 'Timeout' in function_info:
             function_info['Timeout'] = int(function_info['Timeout'])
-        function_info['Runtime'] = 'python2.7'
-        function_info['Code'] = {'ZipFile': functions_code}
+        set_function(client, function_info, functions_code)
+
+
+def set_function(client, info, code):
+    try:
         client.create_function(
-            **function_info
+            Runtime='python2.7',
+            Code={'ZipFile': code},
+            **info
+        )
+    except:
+        client.update_function_configuration(**info)
+        client.update_function_code(
+            FunctionName=info['FunctionName'],
+            ZipFile=code,
         )
