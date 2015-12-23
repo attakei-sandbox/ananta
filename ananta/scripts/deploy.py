@@ -29,15 +29,17 @@ def deploy_functions(registry, config, args):
 
 
 def set_function(client, info, code):
+    from botocore.exceptions import ClientError
     try:
+        client.update_function_code(
+            FunctionName=info['FunctionName'],
+            ZipFile=code,
+        )
+    except ClientError as err:
+        if 'ResourceNotFoundException' not in err.message:
+            raise err
         client.create_function(
             Runtime='python2.7',
             Code={'ZipFile': code},
             **info
-        )
-    except:
-        client.update_function_configuration(**info)
-        client.update_function_code(
-            FunctionName=info['FunctionName'],
-            ZipFile=code,
         )
