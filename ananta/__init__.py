@@ -1,6 +1,7 @@
 # -*- coding:utf8 -*-
 """Ananta : AWS Lambda packager
 """
+from __future__ import unicode_literals
 import json
 import venusian
 
