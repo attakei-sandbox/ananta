@@ -1,6 +1,7 @@
 # -*- coding:utf8 -*-
 """Ananta : Console reporting command
 """
+from __future__ import unicode_literals
 import os
 import importlib
 import venusian

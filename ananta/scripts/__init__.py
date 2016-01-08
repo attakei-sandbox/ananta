@@ -1,6 +1,7 @@
 # -*- coding:utf8 -*-
 """Ananta : Console scripts
 """
+from __future__ import unicode_literals
 import os
 import sys
 import argparse
