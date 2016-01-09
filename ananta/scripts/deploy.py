@@ -37,6 +37,7 @@ def set_function(client, info, code):
             FunctionName=info['FunctionName'],
             ZipFile=code,
         )
+        client.update_function_configuration(**info)
     except ClientError as err:
         if 'ResourceNotFoundException' not in err.message:
             raise err
