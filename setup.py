@@ -16,6 +16,7 @@ test_requires = [
     'pytest',
     'pytest-pep8',
     'pytest-flakes',
+    'pytest-cov',
 ]
 
 # Use README.rst for long description.
