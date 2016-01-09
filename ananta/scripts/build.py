@@ -23,6 +23,7 @@ def build_packages(registry, config, args):
     pip.main(pip_args.split(' '))
     target = config.get('ananta:build', 'target')
     scan_all(registry, args.path, target)
+    generate_settings(registry, args.path, config)
     shutil.make_archive('package', 'zip', root_dir=args.path)
 
 
@@ -46,3 +47,11 @@ def scan_all(registry, package_dir, target=None):
         scanner.scan(module)
     with open(os.path.join(package_dir, 'functions.json'), 'w') as fp:
         fp.write(registry.jsonify())
+
+
+def generate_settings(registry, package_dir, config):
+    settings_items = config.items('ananta:env')
+    declare_format = '{} = \'{}\'\n'
+    with open(os.path.join(package_dir, 'settings.py'), 'w') as fp:
+        for key, val in settings_items:
+            fp.write(declare_format.format(key, val))
