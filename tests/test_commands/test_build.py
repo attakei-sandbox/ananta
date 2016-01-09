@@ -23,8 +23,9 @@ class TestForBuild(object):
         os.makedirs(self.target)
 
     def _call_fut(self, registry, args):
+        from ananta.scripts import new_config
         from ananta.scripts.build import build_packages
-        return build_packages(registry, None, args)
+        return build_packages(registry, new_config(), args)
 
     # def test_not_setup(self):
     #     args = DictObject(path=self.target)

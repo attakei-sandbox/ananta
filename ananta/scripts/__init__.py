@@ -99,6 +99,17 @@ parser_deploy.add_argument(
 )
 
 
+def new_config():
+    config = ConfigParser.SafeConfigParser()
+    config.optionxform = str
+    config.add_section('ananta:function')
+    config.add_section('ananta:build')
+    config.add_section('ananta:env')
+    config.set('ananta:build', 'prefix', '')
+    config.set('ananta:build', 'target', '')
+    return config
+
+
 def main(argv=None):
     """Console script endpoint
 
@@ -110,15 +121,8 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv[1:]
     args = parser.parse_args(argv)
-
     registry = Registry()
-    config = ConfigParser.SafeConfigParser({
-        'ananta:build': {
-            'prefix': '',
-            'target': '',
-        }
-    })
-    config.optionxform = str
+    config = new_config()
     if args.conf is not None:
         config.read(args.conf)
     return args.func(registry, config, args)

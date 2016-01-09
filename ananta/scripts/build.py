@@ -15,9 +15,8 @@ __author__ = 'attakei'
 
 def build_packages(registry, config, args):
     import pip
-    if config is not None:
-        for key, val in config.items('ananta:function'):
-            registry.set_default(key, val)
+    for key, val in config.items('ananta:function'):
+        registry.set_default(key, val)
     if args.path is None:
         args.path = tempfile.mkdtemp()
     pip_args = 'install -t {} .'.format(args.path)
