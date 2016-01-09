@@ -23,7 +23,7 @@ def build_packages(registry, config, args):
     pip_args = 'install -t {} .'.format(args.path)
     pip.main(pip_args.split(' '))
     if config:
-        target = config.get('ananta:build', 'Target', [])
+        target = config.get('ananta:build', 'target', [])
     else:
         target = None
     scan_all(registry, args.path, target)
