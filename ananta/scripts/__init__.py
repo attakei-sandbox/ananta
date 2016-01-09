@@ -112,9 +112,13 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     registry = Registry()
-    config = None
+    config = ConfigParser.SafeConfigParser({
+        'ananta:build': {
+            'prefix': '',
+            'target': '',
+        }
+    })
+    config.optionxform = str
     if args.conf is not None:
-        config = ConfigParser.SafeConfigParser()
-        config.optionxform = str
         config.read(args.conf)
     return args.func(registry, config, args)

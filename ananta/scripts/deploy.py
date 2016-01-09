@@ -19,8 +19,10 @@ def deploy_functions(registry, config, args):
         functions_list = json.loads(zfp.read('functions.json'))
     with open(args.path, 'rb') as fp:
         functions_code = fp.read()
+    prefix = config.get('ananta:build', 'prefix')
     for function_info in functions_list:
         logging.info(function_info['FunctionName'])
+        function_info['FunctionName'] = prefix + function_info['FunctionName']
         if 'MemorySize' in function_info:
             function_info['MemorySize'] = int(function_info['MemorySize'])
         if 'Timeout' in function_info:
