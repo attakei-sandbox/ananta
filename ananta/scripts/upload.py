@@ -1,5 +1,5 @@
 # -*- coding:utf8 -*-
-"""Deploy build package
+"""Upload build package
 """
 from __future__ import unicode_literals
 import zipfile
@@ -10,7 +10,7 @@ import logging
 __author__ = 'attakei'
 
 
-def deploy_functions(registry, config, args):
+def upload_functions(registry, config, args):
     import boto3
 
     client = boto3.client('lambda')
