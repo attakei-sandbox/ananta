@@ -10,6 +10,7 @@ import ConfigParser
 from .check import check_functions
 from .build import build_packages
 from .report import report_functions
+from .deploy import deploy_functions
 from .. import Registry
 # def dump_functions(args):
 #     """Scan functions decorated by lambda_config, and dump as json
@@ -90,6 +91,24 @@ parser_report.add_argument(
     help='target module path'
 )
 
+parser_deploy = subparsers.add_parser('deploy', help='Deploy package')
+parser_deploy.set_defaults(func=deploy_functions)
+parser_deploy.add_argument(
+    '-p', '--path', type=file_path, required=True,
+    help='deploy package'
+)
+
+
+def new_config():
+    config = ConfigParser.SafeConfigParser()
+    config.optionxform = str
+    config.add_section('ananta:function')
+    config.add_section('ananta:build')
+    config.add_section('ananta:env')
+    config.set('ananta:build', 'prefix', '')
+    config.set('ananta:build', 'target', '')
+    return config
+
 
 def main(argv=None):
     """Console script endpoint
@@ -102,11 +121,8 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv[1:]
     args = parser.parse_args(argv)
-
     registry = Registry()
-    config = None
+    config = new_config()
     if args.conf is not None:
-        config = ConfigParser.SafeConfigParser()
-        config.optionxform = str
         config.read(args.conf)
     return args.func(registry, config, args)
