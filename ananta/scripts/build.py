@@ -24,7 +24,7 @@ def build_packages(registry, config, args):
     target = config.get('ananta:build', 'target')
     scan_all(registry, args.path, target)
     generate_settings(registry, args.path, config)
-    shutil.make_archive('package', 'zip', root_dir=args.path)
+    return shutil.make_archive('package', 'zip', root_dir=args.path)
 
 
 def scan_all(registry, package_dir, target=None):

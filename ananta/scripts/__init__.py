@@ -11,6 +11,7 @@ from .check import check_functions
 from .build import build_packages
 from .report import report_functions
 from .upload import upload_functions
+from .deploy import deploy_functions
 from .. import Registry
 # def dump_functions(args):
 #     """Scan functions decorated by lambda_config, and dump as json
@@ -96,6 +97,13 @@ parser_upload.set_defaults(func=upload_functions)
 parser_upload.add_argument(
     '-p', '--path', type=file_path, required=True,
     help='upload package'
+)
+
+parser_deploy = subparsers.add_parser('deploy', help='Deploy functions')
+parser_deploy.set_defaults(func=deploy_functions)
+parser_deploy.add_argument(
+    '-p', '--path', type=directory_path, required=False, default=None,
+    help='Deploy packages'
 )
 
 
