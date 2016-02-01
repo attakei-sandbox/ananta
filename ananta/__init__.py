@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import json
 import venusian
 
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 
 
 class Registry(object):
