@@ -11,14 +11,27 @@ Initialize Ananta based projects. (setup.py and other sources)
    $ ananta init
 
 
-Package
--------
+Build
+------
 
 Build archive to upload AWS-Lambda.
 
 .. code-block:: shell
 
-   $ ananta -c development.ini package
+   $ ananta -c development.ini build
+   $ ls
+   ... package.zip ...
+
+Upload
+------
+
+Upload archived file.
+
+.. code-block:: shell
+
+   $ ananta -c development.ini upload package.zip
+   $ ls
+   ... package.zip ...
 
 
 Deploy
