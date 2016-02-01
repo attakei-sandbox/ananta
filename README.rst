@@ -1,8 +1,6 @@
 Ananta
 ======
 
-(Current version doesn't have all features to deploy at AWS)
-
 AWS Lambda packaging library and tools
 
 
