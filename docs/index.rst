@@ -9,9 +9,10 @@ Welcome to ananta's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    install
+   commands
 
 
 Indices and tables
