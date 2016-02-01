@@ -48,4 +48,6 @@ Usage
 3. Deploy to AWS Lambda
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Not implemented
+.. code-block:: bash
+
+   $ ananta upload -p package.zip
