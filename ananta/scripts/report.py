@@ -4,27 +4,23 @@
 from __future__ import unicode_literals
 import sys
 import os
-import glob
-import shutil
-import importlib
 import tempfile
 
 
 __author__ = 'attakei'
 
 
-def build_packages(registry, config, args):
+def report_functions(registry, config, args):
     import pip
-    if args.path is None:
-        args.path = tempfile.mkdtemp()
-    pip_args = 'install -t {} .'.format(args.path)
-    pip.main(pip_args.split(' '))
-    scan_all(registry, args.path)
-    shutil.make_archive('package', 'zip', root_dir=args.path)
-
-
-def scan_all(registry, package_dir):
     import venusian
+    import importlib
+    if args.path is None:
+        package_dir = tempfile.mkdtemp()
+    else:
+        package_dir = args.path
+    pip_args = 'install -t {} .'.format(package_dir)
+    pip.main(pip_args.split(' '))
+    import glob
     modules = []
     sys.path.append(package_dir)
     for path in glob.glob(os.path.join(package_dir, '*')):
@@ -38,5 +34,13 @@ def scan_all(registry, package_dir):
     scanner = venusian.Scanner(registry=registry)
     for module in modules:
         scanner.scan(module)
-    with open(os.path.join(package_dir, 'functions.json'), 'w') as fp:
-        fp.write(registry.jsonify())
+    # shutil.make_archive('package', 'zip', root_dir=args.path)
+    display_as_test(registry.jsonify())
+
+
+def display_as_test(json_data):
+    import json
+    for function in json.loads(json_data):
+        print('Function : ' + function['FunctionName'])
+        for key, val in function.items():
+            print('\t{}: {}'.format(key, val))

@@ -22,9 +22,9 @@ class TestForBuild(object):
         shutil.rmtree(self.target, ignore_errors=True)
         os.makedirs(self.target)
 
-    def _call_fut(self, args):
+    def _call_fut(self, registry, args):
         from ananta.scripts.build import build_packages
-        return build_packages(None, None, args)
+        return build_packages(registry, None, args)
 
     # def test_not_setup(self):
     #     args = DictObject(path=self.target)
@@ -32,10 +32,11 @@ class TestForBuild(object):
     #         self._call_fut(args)
 
     def test_with_setup(self):
+        from ananta import Registry
         test_package = os.path.join(samples_dir, 'minimum')
         package_path = os.path.join(test_package, 'package.zip')
         shutil.rmtree(package_path, ignore_errors=True)
         with working_directory(test_package):
             args = DictObject(path=self.target)
-            self._call_fut(args)
+            self._call_fut(Registry(), args)
         assert os.path.exists(package_path)
